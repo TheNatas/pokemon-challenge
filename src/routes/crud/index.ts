@@ -1,48 +1,31 @@
-import { Request, Response } from "express";
-import { app } from "../..";
+import { Request, Response, Router } from "express";
+import { createPokemonController } from "../../controllers/createPokemon.controller";
+import { getConnection } from "../../db";
+import { updatePokemonController } from "../../controllers/updatePokemon.controller";
+import { deletePokemonController } from "../../controllers/deletePokemon.controller";
+import { getPokemonController } from "../../controllers/getPokemon.controller";
+import { getPokemonsController } from "../../controllers/getPokemons.controller";
 
-app.post('/pokemons', (req: Request, res: Response) => {
-  res.status(201).json({
-    "id": 1,
-    "tipo": "pikachu",
-    "treinador": "Thiago",
-    "nivel": 1
+export const pokemonCrudRoutes = (
+  router: Router
+) => {
+  router.post('/pokemons', (req: Request, res: Response) => {
+    createPokemonController(req, res);
   });
-});
 
-app.put('/pokemons/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.status(204);
-});
-
-app.delete('/pokemons/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.status(204);
-});
-
-app.get('/pokemons/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  res.status(200).json({
-    "id": id,
-    "tipo": "pikachu",
-    "treinador": "Thiago",
-    "nivel": 1
+  router.put('/pokemons/:id', (req: Request, res: Response) => {
+    updatePokemonController(req, res);
   });
-});
 
-app.get('/pokemons', (req: Request, res: Response) => {
-  res.status(200).json([
-    {
-      "id": 1,
-      "tipo": "pikachu",
-      "treinador": "Thiago",
-      "nivel": 1
-    },
-    {
-      "id": 2,
-      "tipo": "charizard",
-      "treinador": "Renato",
-      "nivel": 1
-    }
-  ]);
-});
+  router.delete('/pokemons/:id', (req: Request, res: Response) => {
+    deletePokemonController(req, res);
+  });
+
+  router.get('/pokemons/:id', (req: Request, res: Response) => {
+    getPokemonController(req, res);
+  });
+
+  router.get('/pokemons', async (req: Request, res: Response) => {
+    getPokemonsController(req, res);
+  });
+}

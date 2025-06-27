@@ -1,20 +1,10 @@
-import { Request, Response } from "express";
-import { app } from "../..";
+import { Request, Response, Router } from "express";
+import { battleOfPokemonsController } from "../../controllers/battleOfPokemons.controller";
 
-app.post('/batalhar/:pokemonAId/:pokemonBId', (req: Request, res: Response) => {
-  const { pokemonAId, pokemonBId } = req.params;
-  res.status(200).json({
-    "vencedor": {
-      "id": 1,
-      "tipo": "pikachu",
-      "treinador": "Thiago",
-      "nivel": 2 // Subiu de nível
-    },
-    "perdedor": {
-      "id": 2,
-      "tipo": "charizard",
-      "treinador": "Renato",
-      "nivel": 0 // Morreu e foi deletado da tabela
-    }
+export const pokemonBattleRoutes = (
+  router: Router
+) => {
+  router.post('/batalhar/:pokemonAId/:pokemonBId', (req: Request, res: Response) => {
+    battleOfPokemonsController(req, res);
   });
-});
+}
