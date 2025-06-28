@@ -20,7 +20,6 @@ export const getPokemonsController = async (
 
     res.status(200).json(pokemons);
   } catch (error) {
-    console.error("Error getting Pokemons:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: "Internal Server Error" });
   }
 }

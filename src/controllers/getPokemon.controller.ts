@@ -15,13 +15,12 @@ export const getPokemonController = async (
 
     const connection = await getConnection();
 
-    await new GetPokemonUseCase(
+    const pokemon = await new GetPokemonUseCase(
       new PokemonRepository(connection)
     ).execute(id);
 
-    res.status(204);
+    res.status(200).json(pokemon);
   } catch (error) {
-    console.error("Error getting Pokemon:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(404).json({ error: "Internal Server Error" });
   }
 }

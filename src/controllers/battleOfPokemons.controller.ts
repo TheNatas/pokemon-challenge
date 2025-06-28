@@ -4,6 +4,7 @@ import { PokemonRepository } from "../repositories/pokemon.repository";
 import { getConnection } from "../db";
 import { UpdatePokemonUseCase } from "../use-cases/updatePokemon.useCase";
 import { BattleOfPokemonsUseCase } from "../use-cases/battleOfPokemons.useCase";
+import { DuplicateIdError } from "../errors/duplicateId.error";
 
 export const battleOfPokemonsController = async (
   req: Request,
@@ -22,8 +23,11 @@ export const battleOfPokemonsController = async (
     connection.commit();
 
     res.status(200).json(result);
-  } catch (error) {
-    console.error("Error on battle between pokemons:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (error: DuplicateIdError | any) {
+    if (error instanceof DuplicateIdError) {
+      return res.status(400).json({ error: error.message });
+    } else {
+      return res.status(404).json({ error: "Internal Server Error" });
+    }
   }
 }

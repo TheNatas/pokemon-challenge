@@ -1,4 +1,5 @@
 import { PokemonDto } from "../dtos/Pokemon.dto";
+import { DuplicateIdError } from "../errors/duplicateId.error";
 import { PokemonRepository } from "../repositories/pokemon.repository";
 
 export class BattleOfPokemonsUseCase {
@@ -15,6 +16,11 @@ export class BattleOfPokemonsUseCase {
     }
     if (!pokemonBId) {
       throw new Error('Pokemon B ID is required');
+    }
+
+    if (pokemonAId === pokemonBId) {
+      console.log(`Both Pokemons have the same ID: ${pokemonAId}`);
+      throw new DuplicateIdError(pokemonAId);
     }
 
     const pokemonA = await this.pokemonRepository.findById(pokemonAId);

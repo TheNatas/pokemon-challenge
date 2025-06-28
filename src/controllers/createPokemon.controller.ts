@@ -21,6 +21,6 @@ export const createPokemonController = async (
 
     res.status(201).json(response);
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(400).json({ error: "Internal Server Error" });
   }
 }
