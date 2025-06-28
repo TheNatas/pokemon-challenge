@@ -1,10 +1,9 @@
 // tests/pokemon.integration.test.ts
 
 import request from 'supertest';
-import { Server } from 'http'; // Importa o tipo Server do Node
+import { Server } from 'http'; 
 import { app } from '..';
 
-// Definindo uma interface para o objeto Pokémon para garantir a tipagem
 interface Pokemon {
   id: number;
   tipo: 'pikachu' | 'charizard' | 'mewtwo';
@@ -16,12 +15,10 @@ describe('API de Pokémons - Testes de Integração (TypeScript)', () => {
   let server: Server;
   let pokemonCriadoId: number;
 
-  // Inicia o servidor antes de todos os testes
   beforeAll((done) => {
-    server = app.listen(4001, done); // Usa uma porta diferente para evitar conflitos
+    server = app.listen(4001, done);
   });
 
-  // Fecha o servidor após todos os testes
   afterAll((done) => {
     server.close(done);
   });
@@ -48,7 +45,6 @@ describe('API de Pokémons - Testes de Integração (TypeScript)', () => {
       expect(pokemonRetornado.treinador).toBe(novoPokemon.treinador);
       expect(pokemonRetornado.nivel).toBe(1);
 
-      // Guarda o ID para usar em outros testes
       pokemonCriadoId = pokemonRetornado.id;
     });
 

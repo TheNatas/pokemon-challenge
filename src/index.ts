@@ -2,6 +2,7 @@ import express, { json, Request, Response, Router } from 'express';
 import { routes } from './routes';
 import path from 'path';
 import fs from 'fs';
+import setupSwaggerDocs from './swagger';
 
 const app = express();
 const port = 8080;
@@ -28,6 +29,8 @@ const router = Router();
 routes(router);
 
 app.use(router)
+
+setupSwaggerDocs(app);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
