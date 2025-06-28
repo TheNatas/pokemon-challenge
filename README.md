@@ -1,7 +1,16 @@
 # pokemon-challenge
 
-### Usage
+### Installing
 ```
 npm i
+```
+
+### Testing
+```
+npm test
+```
+
+### Running
+```
 npm run dev
 ```
