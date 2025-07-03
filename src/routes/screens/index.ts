@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { battleOfPokemonsController } from "../../controllers/battleOfPokemons.controller";
 import { getPokemonsController } from "../../controllers/getPokemons.controller";
 
 export const screensRoutes = (
@@ -18,7 +17,7 @@ export const screensRoutes = (
           <p>Use the API to battle your Pokémon.</p>
           <p>Check out the documentation for more details.</p>
           <ul>
-            ${pokemons.map(pokemon => `<li>${pokemon.treinador} - ${pokemon.tipo} (Level: ${pokemon.nivel})</li>`).join('')}
+            ${pokemons?.map(pokemon => `<li>${pokemon.treinador} - ${pokemon.tipo} (Level: ${pokemon.nivel})</li>`).join('')}
           </ul>
         </body>
       </html>

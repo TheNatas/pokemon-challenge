@@ -19,13 +19,13 @@ export class CreatePokemonUseCase {
     }
 
     // Create a new Pokemon using the repository
-    const dbResponse = await this.pokemonRepository.create(
+    const dbResponse : Pokemon = await this.pokemonRepository.create(
       Pokemon.createNew(pokemonDto.tipo, pokemonDto.treinador)
     );
 
-    const newPokemon = await this.pokemonRepository.findById(
-      dbResponse.insertId
-    )
+    const newPokemon = dbResponse ? await this.pokemonRepository.findById(
+      dbResponse?.id!
+    ) : null;
     
     // Return the created Pokemon
     return newPokemon;

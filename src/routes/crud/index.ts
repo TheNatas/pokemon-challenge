@@ -1,6 +1,5 @@
 import { Request, Response, Router } from "express";
 import { createPokemonController } from "../../controllers/createPokemon.controller";
-import { getConnection } from "../../db";
 import { updatePokemonController } from "../../controllers/updatePokemon.controller";
 import { deletePokemonController } from "../../controllers/deletePokemon.controller";
 import { getPokemonController } from "../../controllers/getPokemon.controller";

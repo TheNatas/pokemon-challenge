@@ -1,33 +1,33 @@
-import mysql, { ResultSetHeader } from 'mysql2/promise';
 import { Pokemon, UpdatableFieldObject } from '../entities/Pokemon';
+import { Pool } from 'pg';
 
 export class PokemonRepository {
   constructor(
-    private readonly db: mysql.Connection
+    private readonly db: Pool
   ) {}
 
   async create(pokemon : Pokemon) {
-    const [result] = await this.db.execute(
+    const { rows } = await this.db.query(
       Pokemon.getInsertQuery(pokemon)
     );
-    return result as ResultSetHeader;
+    return rows[0] as Pokemon;
   }
 
   async update(id: number, fieldsToUpdate: UpdatableFieldObject[]) {
-    const [result] = await this.db.execute(
+    const { rows } = await this.db.query(
       Pokemon.getUpdateQuery(id, fieldsToUpdate)
     );
-    return result as ResultSetHeader;
+    return rows;
   }
 
   async delete(id : number) {
-    await this.db.execute(
+    await this.db.query(
       Pokemon.getDeleteQuery(id)
     );
   }
 
   async findById(id : number) {
-    const [rows] = await this.db.query(
+    const { rows } = await this.db.query(
       Pokemon.getSelectQuery(id)
     )
     const pokemons = rows as Pokemon[];
@@ -35,9 +35,10 @@ export class PokemonRepository {
   }
 
   async findAll() {
-    const [rows] = await this.db.query(
+    const { rows } = await this.db.query(
       Pokemon.getSelectQuery()
     );
+
     const pokemons = rows as Pokemon[];
     return pokemons;
   }

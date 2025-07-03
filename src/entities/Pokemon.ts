@@ -26,11 +26,11 @@ export class Pokemon {
   }
 
   static getInsertQuery(pokemon : Pokemon): string {
-    return `INSERT INTO pokemon (tipo, treinador, nivel) VALUES ('${pokemon.tipo}', '${pokemon.treinador}', ${pokemon.nivel})`;
+    return `INSERT INTO pokemon (tipo, treinador, nivel) VALUES ('${pokemon.tipo}', '${pokemon.treinador}', ${pokemon.nivel}) RETURNING *`;
   }
 
   static getUpdateQuery(id: number, fieldsToUpdate: UpdatableFieldObject[]): string {
-    return `UPDATE pokemon SET ${fieldsToUpdate.map(field => `${field.key} = '${field.value}'`).join(',')} WHERE id = ${id}`;
+    return `UPDATE pokemon SET ${fieldsToUpdate.map(field => `${field.key} = '${field.value}'`).join(',')} WHERE id = ${id} RETURNING *`;
   }
 
   static getSelectQuery(id?: number): string {
@@ -38,6 +38,6 @@ export class Pokemon {
   }
 
   static getDeleteQuery(id: number): string {
-    return `DELETE FROM pokemon WHERE id = ${id}`;
+    return `DELETE FROM pokemon WHERE id = ${id} RETURNING *`;
   }
 }

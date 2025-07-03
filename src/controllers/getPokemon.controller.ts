@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
-import { PokemonDto } from "../dtos/Pokemon.dto";
 import { PokemonRepository } from "../repositories/pokemon.repository";
-import { getConnection } from "../db";
-import { UpdatePokemonUseCase } from "../use-cases/updatePokemon.useCase";
-import { DeletePokemonUseCase } from "../use-cases/deletePokemon.useCase";
+import { connection } from "../db";
 import { GetPokemonUseCase } from "../use-cases/getPokemon.useCase";
 
 export const getPokemonController = async (
@@ -12,8 +9,6 @@ export const getPokemonController = async (
 ) => {
   try {
     const id : number = parseInt(req.params.id);
-
-    const connection = await getConnection();
 
     const pokemon = await new GetPokemonUseCase(
       new PokemonRepository(connection)
